@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Projekt.Models
+﻿namespace Projekt.Models
 {
     public class Product_Ingredient
     {

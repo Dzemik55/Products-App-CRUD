@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projekt.Models;
-using System.Reflection.Emit;
 
 namespace Projekt.Data
 {
-    public class DB_Context :DbContext
+    public class DB_Context : DbContext
     {
-        public DB_Context(DbContextOptions<DB_Context> options): base(options)
+        public DB_Context(DbContextOptions<DB_Context> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,7 +38,7 @@ namespace Projekt.Data
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Subcategory> Subcategories { get; set;}
+        public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
