@@ -25,15 +25,15 @@ namespace Projekt.Data
                 .HasIndex(u => u.Email)
                 .IsUnique();
             builder.Entity<Product_Ingredient>()
-                .HasKey(pi => new { pi.Ingredient_id, pi.Product_id });
+                .HasKey(pi => new { pi.IngredientId, pi.ProductId });
             builder.Entity<Product_Ingredient>()
                 .HasOne(pi => pi.Product)
                 .WithMany(p => p.Product_Ingredients)
-                .HasForeignKey(pi => pi.Product_id);
+                .HasForeignKey(pi => pi.ProductId);
             builder.Entity<Product_Ingredient>()
                 .HasOne(pi => pi.Ingredient)
                 .WithMany(i => i.Product_Ingredients)
-                .HasForeignKey(pi => pi.Ingredient_id);
+                .HasForeignKey(pi => pi.IngredientId);
 
         }
 

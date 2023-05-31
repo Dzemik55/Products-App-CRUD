@@ -1,0 +1,21 @@
+﻿@model Subcategory
+
+<form method="post" asp-action="DeletePOST">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete Subcategory</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" disabled />
+            <label asp-for="CategoryId"></label>
+            <input asp-for="CategoryId" class="form-control" disabled />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Delete</button>
+        <a asp-controller="Subcategory" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>

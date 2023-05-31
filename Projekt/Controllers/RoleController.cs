@@ -6,19 +6,19 @@ using Projekt.Models;
 
 namespace Projekt.Controllers
 {
-    public class CategoryController : Controller
+    public class RoleController : Controller
     {
         private readonly DB_Context _db;
 
-        public CategoryController(DB_Context db)
+        public RoleController(DB_Context db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.Categories;
-            return View(objCategoryList);
+            IEnumerable<Role> objRoleList = _db.Roles;
+            return View(objRoleList);
         }
 
         //GET
@@ -28,25 +28,25 @@ namespace Projekt.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDatabase = _db.Categories.Find(id);
+            var roleFromDatabase = _db.Roles.Find(id);
 
-            if (categoryFromDatabase == null)
+            if (roleFromDatabase == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDatabase);
+            return View(roleFromDatabase);
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(Role obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
+                _db.Roles.Update(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Category edited successfully!";
+                TempData["success"] = "Role edited successfully!";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -61,15 +61,15 @@ namespace Projekt.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(Role obj)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _db.Categories.Add(obj);
+                    _db.Roles.Add(obj);
                     _db.SaveChanges();
-                    TempData["success"] = "Category created successfully!";
+                    TempData["success"] = "Role created successfully!";
                     return RedirectToAction("Index");
                 }
                 catch (DbUpdateException ex)
@@ -77,7 +77,7 @@ namespace Projekt.Controllers
                     // Obsługa wyjątku spowodowanego przez naruszenie indeksu unique.
                     if (ex.InnerException is SqlException sqlException && sqlException.Number == 2601)
                     {
-                        ModelState.AddModelError(string.Empty, "Category already exists!");
+                        ModelState.AddModelError(string.Empty, "Role already exists!");
                     }
                     else
                     {
@@ -95,13 +95,13 @@ namespace Projekt.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDatabase = _db.Categories.Find(id);
+            var roleFromDatabase = _db.Roles.Find(id);
 
-            if (categoryFromDatabase == null)
+            if (roleFromDatabase == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDatabase);
+            return View(roleFromDatabase);
         }
 
         //POST
@@ -109,15 +109,15 @@ namespace Projekt.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Categories.Find(id);
+            var obj = _db.Roles.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
+            _db.Roles.Remove(obj);
             _db.SaveChanges();
-            TempData["success"] = "Category deleted successfully!";
+            TempData["success"] = "Role deleted successfully!";
             return RedirectToAction("Index");
 
         }

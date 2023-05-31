@@ -1,0 +1,29 @@
+﻿@model User
+
+<form method="post" asp-action="DeletePOST">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete User</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" disabled />
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" disabled />
+            <label asp-for="Pseudonim"></label>
+            <input asp-for="Pseudonim" class="form-control" disabled />
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" disabled />
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" disabled />
+            <label asp-for="RoleId"></label>
+            <select asp-for="RoleId" class="form-select" asp-items="ViewBag.RoleId" disabled></select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Delete</button>
+        <a asp-controller="User" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>

@@ -12,8 +12,8 @@ using Projekt.Data;
 namespace Projekt.Migrations
 {
     [DbContext(typeof(DB_Context))]
-    [Migration("20230430123201_Test")]
-    partial class Test
+    [Migration("20230530103437_m")]
+    partial class m
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,7 +85,13 @@ namespace Projekt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubcategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Subcategory_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserID")
                         .HasColumnType("int");
 
                     b.Property<int>("User_id")
@@ -93,24 +99,24 @@ namespace Projekt.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Subcategory_id");
+                    b.HasIndex("SubcategoryId");
 
-                    b.HasIndex("User_id");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Projekt.Models.Product_Ingredient", b =>
                 {
-                    b.Property<int>("Ingredient_id")
+                    b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Product_id")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("Ingredient_id", "Product_id");
+                    b.HasKey("IngredientId", "ProductId");
 
-                    b.HasIndex("Product_id");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Product_Ingredients");
                 });
@@ -137,11 +143,11 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Subcategory", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -150,7 +156,7 @@ namespace Projekt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -199,34 +205,26 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Product", b =>
                 {
-                    b.HasOne("Projekt.Models.Subcategory", "Subcategories")
+                    b.HasOne("Projekt.Models.Subcategory", null)
                         .WithMany("Products")
-                        .HasForeignKey("Subcategory_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubcategoryId");
 
-                    b.HasOne("Projekt.Models.User", "Users")
+                    b.HasOne("Projekt.Models.User", null)
                         .WithMany("Products")
-                        .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subcategories");
-
-                    b.Navigation("Users");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("Projekt.Models.Product_Ingredient", b =>
                 {
                     b.HasOne("Projekt.Models.Ingredient", "Ingredient")
                         .WithMany("Product_Ingredients")
-                        .HasForeignKey("Ingredient_id")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Projekt.Models.Product", "Product")
                         .WithMany("Product_Ingredients")
-                        .HasForeignKey("Product_id")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -237,13 +235,11 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Subcategory", b =>
                 {
-                    b.HasOne("Projekt.Models.Category", "Category")
+                    b.HasOne("Projekt.Models.Category", null)
                         .WithMany("Subcategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Projekt.Models.User", b =>

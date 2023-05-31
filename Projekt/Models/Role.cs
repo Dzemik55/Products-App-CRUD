@@ -5,9 +5,9 @@ namespace Projekt.Models
     public class Role
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; } = new List<User>();
     }
 }

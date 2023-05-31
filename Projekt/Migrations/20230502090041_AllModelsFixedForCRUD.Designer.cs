@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt.Data;
 
@@ -11,9 +12,11 @@ using Projekt.Data;
 namespace Projekt.Migrations
 {
     [DbContext(typeof(DB_Context))]
-    partial class DB_ContextModelSnapshot : ModelSnapshot
+    [Migration("20230502090041_AllModelsFixedForCRUD")]
+    partial class AllModelsFixedForCRUD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,15 +102,15 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Product_Ingredient", b =>
                 {
-                    b.Property<int>("IngredientId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("IngredientId", "ProductId");
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ProductId");
+                    b.HasKey("ProductId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
 
                     b.ToTable("Product_Ingredients");
                 });
@@ -181,10 +184,6 @@ namespace Projekt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Pseudonim")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
@@ -200,29 +199,33 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Product", b =>
                 {
-                    b.HasOne("Projekt.Models.Subcategory", null)
-                        .WithMany("Products")
+                    b.HasOne("Projekt.Models.Subcategory", "Subcategory")
+                        .WithMany("Product")
                         .HasForeignKey("SubcategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projekt.Models.User", null)
-                        .WithMany("Products")
+                    b.HasOne("Projekt.Models.User", "User")
+                        .WithMany("Product")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Subcategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Projekt.Models.Product_Ingredient", b =>
                 {
                     b.HasOne("Projekt.Models.Ingredient", "Ingredient")
-                        .WithMany("Product_Ingredients")
+                        .WithMany("Product_Ingredient")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Projekt.Models.Product", "Product")
-                        .WithMany("Product_Ingredients")
+                        .WithMany("Product_Ingredient")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -234,52 +237,54 @@ namespace Projekt.Migrations
 
             modelBuilder.Entity("Projekt.Models.Subcategory", b =>
                 {
-                    b.HasOne("Projekt.Models.Category", null)
-                        .WithMany("Subcategories")
+                    b.HasOne("Projekt.Models.Category", "Category")
+                        .WithMany("Subcategory")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Projekt.Models.User", b =>
                 {
-                    b.HasOne("Projekt.Models.Role", "Roles")
-                        .WithMany("Users")
+                    b.HasOne("Projekt.Models.Role", "Role")
+                        .WithMany("User")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Roles");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Projekt.Models.Category", b =>
                 {
-                    b.Navigation("Subcategories");
+                    b.Navigation("Subcategory");
                 });
 
             modelBuilder.Entity("Projekt.Models.Ingredient", b =>
                 {
-                    b.Navigation("Product_Ingredients");
+                    b.Navigation("Product_Ingredient");
                 });
 
             modelBuilder.Entity("Projekt.Models.Product", b =>
                 {
-                    b.Navigation("Product_Ingredients");
+                    b.Navigation("Product_Ingredient");
                 });
 
             modelBuilder.Entity("Projekt.Models.Role", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Projekt.Models.Subcategory", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Projekt.Models.User", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

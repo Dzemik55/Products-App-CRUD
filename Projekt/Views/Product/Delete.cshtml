@@ -1,0 +1,25 @@
+﻿@model Product
+
+<form method="post" asp-action="DeletePOST">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete Product</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" disabled />
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control" disabled />
+            <label asp-for="SubcategoryId"></label>
+            <select asp-for="SubcategoryId" class="form-select" asp-items="ViewBag.SubcategoryId" disabled></select>
+            <label asp-for="UserId"></label>
+            <select asp-for="UserId" class="form-select" asp-items="ViewBag.UserId" disabled></select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Delete</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>

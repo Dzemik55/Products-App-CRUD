@@ -1,0 +1,38 @@
+﻿@model User
+
+<form method="post" asp-action="Edit">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit User</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <label asp-for="Pseudonim"></label>
+            <input asp-for="Pseudonim" class="form-control" />
+            <span asp-validation-for="Pseudonim" class="text-danger"></span>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <label asp-for="RoleId"></label>
+            <select asp-for="RoleId" class="form-select" asp-items="ViewBag.RoleId"></select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Edit</button>
+        <a asp-controller="User" asp-action="Index" class="btn btn-secondary" style="width:150px">
+            Back to list
+        </a>
+    </div>
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
